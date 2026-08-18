@@ -3,6 +3,7 @@ from typing import List, Optional
 from datetime import datetime
 from sqlalchemy import Enum, ForeignKey, TIMESTAMP
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from database import engine
 
 
 class Base(DeclarativeBase):
@@ -45,9 +46,8 @@ class Booking(Base):
     user: Mapped["User"] = relationship(back_populates="bookings")
     resource: Mapped["Resource"] = relationship(back_populates="bookings")
 
-user="db_user"
-password="db_password"
-port=""
-db="db_name"
 
-#engine=create_engine(f"postgresql+psycopg2://{$user}:{$password}@localhost:port/{$dbname}")
+async def init_models():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+

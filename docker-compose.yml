@@ -1,0 +1,22 @@
+services:
+  db:
+   image: postgres:18
+   ports:
+     - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+   environment:
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_USER=postgres
+     - POSTGRES_DB=WSB
+  api_background:
+    build: .
+    ports: 
+      - "${APP_PORT}:8888"
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT="${POSTGRES_PORT}"
+      - POSTGRES_PASSWORD=password
+    depends_on:
+      - db
+    
+
+
