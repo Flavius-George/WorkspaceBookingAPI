@@ -3,7 +3,7 @@ USER="postgres"
 PASSWORD="password"
 PORT="5432"
 DB="WSB"
-DB_URL=f"postgresql+asyncpg://{USER}:{PASSWORD}@db:{PORT}/{DB}"
+DB_URL=f"postgresql+asyncpg://{USER}:{PASSWORD}@localhost:{PORT}/{DB}"
 
 engine = create_async_engine(DB_URL, echo=True)
 
