@@ -12,7 +12,9 @@ class ResourceTypeEnum(str, Enum):
 
 
 class UserBase(BaseModel):
-    email: EmailStr 
+    first_name: str = Field(min_length=2, max_length=50)
+    last_name: str = Field(min_length=2, max_length=50)
+    email: EmailStr
     role: UserRoleEnum = UserRoleEnum.user
 
 class UserCreate(UserBase):
