@@ -24,7 +24,11 @@ async def get_user_by_email(db: AsyncSession, user_email: str):
     return found_user
 
 async def check_overlapping_booking(db: AsyncSession, resource_id:int, activity_beginning: DateTime, activity_end: DateTime):
-    stmt = select(models.Booking.id, models.Booking.resource_id, models.Booking.start_time, models.Booking.end_time).where(resource_id==models.Booking.resource_id, activity_beginning<models.Booking.end_time, activity_end>models.Booking.start_time)
+    stmt = select(models.Booking.id, models.Booking.resource_id, models.Booking.start_time, models.Booking.end_time).where(
+        resource_id==models.Booking.resource_id, 
+        activity_beginning<models.Booking.end_time,
+          activity_end>models.Booking.start_time)
+    
     result = await db.execute(stmt)
     overlapping_booking = result.first()
 
